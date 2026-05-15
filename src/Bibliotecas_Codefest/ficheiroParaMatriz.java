@@ -18,31 +18,34 @@ public class ficheiroParaMatriz {//-------------------TRANSFORMAR O FICHEIRO EM 
         return contagemLinhas;
     }
 
-    public static int contarColunasFicheiro(String caminhoFicheiro) throws FileNotFoundException {
+    public static int contarColunasFicheiro(String caminhoFicheiro, String delimitador) throws FileNotFoundException {
         File ficheiro = new File(caminhoFicheiro);
         Scanner sc = new Scanner(ficheiro);
 
         String linha = sc.nextLine();
-        String[] linhaSeparada = linha.split(",");
+        String[] linhaSeparada = linha.split(delimitador);
 
         int contagemColunas = linhaSeparada.length;
 
         return contagemColunas;
     }
 
-    public static String[][] lerFicheiroParaMatriz(String caminhoFicheiro, String delimitador) throws FileNotFoundException {
-        int numeroLinhas = contarLinhasFicheiro(caminhoFicheiro) - 1;
-        int numeroColunas = contarColunasFicheiro(caminhoFicheiro);
+    public static String[][] lerFicheiroParaMatriz(String caminhoFicheiro, String delimitador, boolean hasHeader) throws FileNotFoundException {
+        int numeroLinhas = contarLinhasFicheiro(caminhoFicheiro);
+
+        if(hasHeader) numeroLinhas--;
+
+
+        int numeroColunas = contarColunasFicheiro(caminhoFicheiro,delimitador);
 
         int linhaAtualMatriz = 0;
         String[][] matrizCompleta = new String[numeroLinhas][numeroColunas];
 
         Scanner sc = new Scanner(new File(caminhoFicheiro));
-
-        sc.nextLine();
+        if (hasHeader) sc.nextLine(); // a gente pula a linha do cabeçalho
 
         while (sc.hasNextLine()) {
-            String linha = sc.nextLine(); // a gente pula a linha do cabeçalho
+            String linha = sc.nextLine();
             String[] linhaSeparada = linha.split(delimitador);
 
             for (int i = 0; i < numeroColunas; i++) {

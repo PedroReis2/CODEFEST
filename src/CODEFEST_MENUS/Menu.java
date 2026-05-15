@@ -4,12 +4,14 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static ADMIN.Case02.*;
+import static ADMIN.Case01.*;
+import static ADMIN.Case03.*;
 
 public class Menu {
-    public static void menuAdmin(String[][] matrizFestival, String[][] matrizTickets) throws FileNotFoundException {
+    public static void menuAdmin(String[][] matrizAdmin, String[][] matrizTickets, String[][] matrizLine, String[][] matrizQuiz) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
 
-        int opcao;
+        int option;
         do {
             System.out.println("\n\n\n------------------------------------------------");
             System.out.println("----- Admin CODEFEST -----");
@@ -24,13 +26,14 @@ public class Menu {
             System.out.println("0. Sair");
 
             System.out.print("Opção: ");
-            opcao = input.nextInt();
+            option = input.nextInt();
 
             System.out.println("\n\n\n------------------------------------------------");
 
-            switch (opcao) {
+            switch (option) {
                 case 1:
                     System.out.println("1. Info check");
+                    checkFiles(matrizAdmin, matrizTickets, matrizLine, matrizQuiz);
                     break;
 
                 case 2:
@@ -40,6 +43,9 @@ public class Menu {
 
                 case 3:
                     System.out.println("3. Check attendees");
+                    System.out.println("Insert attendee ID: ");
+                    String idAttendee = input.next();
+                    checkAttendee(matrizTickets, idAttendee);
 
                     break;
 
@@ -71,15 +77,15 @@ public class Menu {
                     break;
 
                 default:
-                    System.out.println("Opção Inválida: " + opcao);
+                    System.out.println("Opção Inválida: " + option);
                     break;
             }
 
-        } while (opcao != 0);
+        } while (option != 0);
 
     }
 
-    public static void menuClient(String[][] matrizFestival) {
+    public static void menuClient(String[][] matrizAdmin, String[][] matrizTickets, String[][] matrizLine, String[][] matrizQuiz) {
         Scanner input = new Scanner(System.in);
 
         int option;
@@ -147,7 +153,7 @@ public class Menu {
         } while (option != 0);
     }
 
-    public static void menuLogin(String[][] matrizFestival, String[][] matrizTickets) throws FileNotFoundException {
+    public static void menuLogin(String[][] matrizAdmin, String[][] matrizTickets, String[][] matrizLine, String[][] matrizQuiz) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
 
         int option;
@@ -165,8 +171,7 @@ public class Menu {
 
             switch (option) {
                 case 1:
-
-
+                    menuClient(matrizAdmin, matrizTickets, matrizLine, matrizQuiz);
                     break;
 
                 case 2:
@@ -178,15 +183,15 @@ public class Menu {
 
                     boolean success = false;
 
-                    for (int i = 0; i < matrizFestival.length; i++){
-                        if (matrizFestival[i][0].equals(nameAdmin) && matrizFestival[i][1].equals(passAdmin)){
+                    for (int i = 0; i < matrizAdmin.length; i++){
+                        if (matrizAdmin[i][0].equalsIgnoreCase(nameAdmin) && matrizAdmin[i][1].equalsIgnoreCase(passAdmin)){
                             success = true;
                             break;
                         }
                     }
                     if (success){
                         System.out.println("Login done successfully!");
-                        menuAdmin(matrizFestival, matrizTickets);
+                        menuAdmin(matrizAdmin, matrizTickets, matrizLine, matrizQuiz);
                     }else {
                         System.out.println("ERROR: Username or Password incorrect");
                     }
