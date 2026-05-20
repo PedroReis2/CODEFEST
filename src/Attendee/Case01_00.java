@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Case01_08 {
+public class Case01_00 {
 
     /* 1. Novo festivaleiro */
     public static void newAttendee(){
@@ -22,7 +22,7 @@ public class Case01_08 {
         String email = input.nextLine();
 
         System.out.println("-----Profile created successfully-----");
-        System.out.println("-----" + name + "|" + contact + "|" + email + "-----");
+        System.out.println("-----" + name + " | " + contact + " | " + email + "-----");
 
     }
 
@@ -46,9 +46,28 @@ public class Case01_08 {
     }
 
     /* 3. Cartaz */
-    public static void dailyLineUp(){
+    public static void dailyLineUp(String[][] matrizLine){
+            String[] noRepeatArtist = new String[matrizLine.length];
+            int count = 0;
 
-    }
+            System.out.println("-----CODEFEST ARTISTS-----");
+
+            for (int i = 0; i < matrizLine.length; i++) {
+                String currArtist = matrizLine[i][4];
+                boolean repeat = false;
+                for (int j = 0; j < count; j++) {
+                    if (noRepeatArtist[j].equalsIgnoreCase(currArtist)) {
+                        repeat = true;
+                        break;
+                    }
+                }
+                if (!repeat) {
+                    System.out.println("-----" + currArtist + "-----");
+                    noRepeatArtist[count] = currArtist;
+                    count++;
+                }
+            }
+        }
 
     /* 4. Imprimir Palcos */
     public static void allStages(){
@@ -100,10 +119,79 @@ public class Case01_08 {
     }
 
     /* 5. Concerto mais longo */
+    public static void longestShow(String[][] matrizCartaz) {
+
+        int longest = 0;
+
+        for (int i = 0; i < matrizCartaz.length; i++) {
+            int duration = Integer.parseInt(matrizCartaz[i][6]);
+            if (duration > longest) {
+                longest = duration;
+            } else if (duration == longest) {
+                System.out.println(matrizCartaz[i][4] + " had the longest concert, that played " + matrizCartaz[i][5] +  " music, which took " + longest + " minutes, on " + matrizCartaz[i][1] + " at " + matrizCartaz[i][2] + "h, it took place on " + matrizCartaz[i][3]);
+            }
+        }
+    }
 
     /* 6. Cartaz diário */
+    public static void dailyLine(String[][] matrizTicket, String dayOfChoice) {
+
+        System.out.println("-----Line of " + dayOfChoice.toUpperCase() + "-----");
+
+        boolean found = false;
+
+        for (int i = 0; i < matrizTicket.length; i++) {
+
+            String day = matrizTicket[i][1];
+
+            if (day.equalsIgnoreCase(dayOfChoice)) {
+
+                found = true;
+
+                String hour = matrizTicket[i][2];
+                String stage = matrizTicket[i][3];
+                String artist = matrizTicket[i][4];
+                String genre = matrizTicket[i][5];
+                String duration = matrizTicket[i][6];
+
+                System.out.println(hour + " | " + stage + " | " + artist + " | " + genre + " | " + duration + " min");
+            }
+        }
+
+        if (!found) {
+            System.out.println("-----No concerts on: " + dayOfChoice + "-----");
+        }
+    }
 
     /* 7. Cartaz por genero*/
+    public static void lineByGenre(String[][] matrizLine, String genreOfChoice) {
+
+        System.out.println("-----Line by" + genreOfChoice.toUpperCase() + "-----");
+
+        boolean found = false;
+
+        for (int i = 0; i < matrizLine.length; i++) {
+
+            String genre = matrizLine[i][5];
+
+            if (genre.equalsIgnoreCase(genreOfChoice)) {
+
+                found = true;
+
+                String artist = matrizLine[i][4];
+                String day = matrizLine[i][1];
+                String hour = matrizLine[i][2];
+                String stage = matrizLine[i][3];
+                String duration = matrizLine[i][6];
+
+                System.out.println(artist + " | " + day + " | " + hour + " | " + stage + " | " + duration + " min");
+            }
+        }
+
+        if (!found) {
+            System.out.println("-----No show by: " + genreOfChoice + "-----");
+        }
+    }
 
     /* 8. Quiz */
     public static void festivalQuiz(String[][] matrizQuiz){
@@ -142,5 +230,14 @@ public class Case01_08 {
         System.out.println("\n-----Correct answers: " + points + "/" + matrizQuiz.length + "-----");
 
     }
-}
+
+    /*COPYRIGHT*/
+    public static void printCopyright() throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("Files/Festival_Copyright.txt"));
+        while (sc.hasNextLine()) {
+            System.out.println(sc.nextLine());
+        }
+    }
+    }
+
 
