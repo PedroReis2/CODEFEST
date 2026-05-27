@@ -3,7 +3,7 @@ package CODEFEST_MENUS;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static ADMIN.Case01.*;
+import static ADMIN.Case01.*; /*permite chamar funções criadas em outros ficheiros*/
 import static ADMIN.Case02.*;
 import static ADMIN.Case03.*;
 import static ADMIN.Case04.*;
@@ -67,14 +67,14 @@ public class Menu {
 
                 case 6:
                     System.out.println("6. Tickets per day");
-                    System.out.println("Insert day of choice: "); //sexta, sábado ou domingo (sábado está errado, conferir com o professor)
+                    System.out.println("Insert day of choice: "); /*sexta, sábado ou domingo (sábado está errado, conferir com o professor) --> resolvido, questão a ser ignorada, supor que o utilizador é inteligente*/
                     String dayOfChoice = input.next();
                     dailyTicket(matrizTickets, dayOfChoice);
                     break;
 
                 case 7:
                     System.out.println("7. Total value per ticket");
-                    System.out.println("Insert ticket of choice: ");//VIP, backstage ou diário
+                    System.out.println("Insert ticket of choice: ");/*VIP, backstage ou diário*/
                     String ticketType = input.next();
                     valuePerTicket(matrizTickets, ticketType);
                     break;
@@ -97,7 +97,7 @@ public class Menu {
 
     }
 
-    public static void menuClient(String[][] matrizAdmin, String[][] matrizTickets, String[][] matrizLine, String[][] matrizQuiz) throws FileNotFoundException {
+    public static void menuClient(String[][] matrizAdmin, String[][] matrizTickets, String[][] matrizLine, String[][] matrizQuiz) throws FileNotFoundException {/*throws FileNotFoundException diz que o meu menuClient (caso específico)pode falhar se tentar abrir um ficheiro não chamado, ou que não existe*/
         Scanner input = new Scanner(System.in);
 
         int option;
@@ -122,7 +122,7 @@ public class Menu {
             switch (option) {
                 case 1:
                     System.out.println("1. New Attendee");
-                    newAttendee();
+                    newAttendee(); /*chama a função criada em outro ficheiro, chamada pelo import static*/
                     break;
 
                 case 2:
@@ -146,7 +146,7 @@ public class Menu {
 
                 case 6:
                     System.out.println("6. Daily Line-up");
-                    input.nextLine(); //Limpar o buffer
+                    input.nextLine(); /*Limpar o buffer*/
                     System.out.println("Choose your day: (Sexta, Sábado or Domingo)");
                     String dayOfChoice = input.nextLine();
                     dailyLine(matrizLine, dayOfChoice);
@@ -156,8 +156,8 @@ public class Menu {
                     System.out.println("7. Line-up by Genre");
                     input.nextLine();
                     System.out.println("Which genre you're looking for? ");
-                    String genreOfChoice = input.nextLine();
-                    lineByGenre(matrizLine, genreOfChoice);
+                    String genreOfChoice = input.nextLine(); /*String utilizada para perguntar ao utilizador qual genero de musica (caso especifico) quer pesquisar*/
+                    lineByGenre(matrizLine, genreOfChoice); /*função chama duas variáveis, a matriz de onde ela tira a informação e a resposta do utilizador*/
                     break;
 
                 case 8:
@@ -166,7 +166,7 @@ public class Menu {
                     break;
 
                 case 0:
-                    System.out.println("0. Leave");
+                    System.out.println("0. Leave"); /*Retorna ao menu anterior*/
                     break;
 
                 default:
@@ -191,7 +191,7 @@ public class Menu {
             System.out.print("Option: ");
             option = input.nextInt();
 
-            System.out.println("\n\n\n------------------------------------------------");
+            System.out.println("\n\n\n------------------------------------------------");/*cria linha de separação visual no terminal*/
 
             switch (option) {
                 case 1:
@@ -219,7 +219,7 @@ public class Menu {
                     }else {
                         System.out.println("ERROR: Username or Password incorrect");
                     }
-                    break;
+                    break; /*código de login simples de administrador, percorre a matrizAdmin (que por sua vez lê o csv Festival_AdminLogin) para achar e confirmar a existência de "name" e "password", se coincidem (boolean success = true) permite entrar no menu Admin*/
 
                 case 0:
                     System.out.println("0. Leave");
